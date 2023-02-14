@@ -99,3 +99,26 @@ function broadcast_edges(g::GNNGraph, x)
     gi = graph_indicator(g, edges = true)
     return gather(x, gi)
 end
+
+function _topk(feat, k; rev = true, sortby = nothing)
+    out = DataStore(getfield(feat, :_n))
+    if sortby === nothing
+        for (s, matrix) in pairs(feat)
+            setproperty!(out, s, mapslices(x -> sort(x; rev), matrix, dims = 1)[1:k, :])
+        end
+    else
+        for (s, matrix) in pairs(feat)
+            setproperty!(out, s, sortslices(matrix, dims = 1, lt = (x, y) -> isless(x[sortby], y[sortby]); rev)[1:k, :])
+        end
+    end
+    return out
+end
+
+function topk_nodes(g::GNNGraph,k ; rev = true, sortby = nothing)
+    return _topk(g.ndata,k ; rev, sortby )
+end
+
+function topk_edges(g::GNNGraph,k ;rev = true, sortby = nothing)
+    return _topk(g.edata,k ;rev, sortby)    
+end
+
