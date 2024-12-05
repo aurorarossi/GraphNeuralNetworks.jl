@@ -23,9 +23,6 @@ jobs:
       - name: Build GNNGraphs docs
         run: 
           julia --project=GNNGraphs/docs/ -e '
-          using Pkg;
-          pkg"dev ./GNNGraphs";
-          Pkg.instantiate();
           include("GNNGraphs/docs/make.jl")'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # For authentication with GitHub Actions token
@@ -33,9 +30,6 @@ jobs:
     
       - name: Build GNNlib docs
         run: julia --project=GNNlib/docs/ -e '
-          using Pkg;
-          pkg"dev ./GNNlib ./GNNGraphs";
-          Pkg.instantiate();
           include("GNNlib/docs/make.jl")'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # For authentication with GitHub Actions token
