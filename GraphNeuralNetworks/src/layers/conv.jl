@@ -638,7 +638,7 @@ Flux.@layer :expand GINConv
 Flux.trainable(l::GINConv) = l.train_eps ? (; l.nn, l.ϵ) : (; l.nn)
 
 GINConv(nn, ϵ::Real; aggr = +, train_eps::Bool = false) =
-    GINConv(nn, train_eps ? [ϵ] : ϵ, aggr, train_eps)
+    GINConv(nn, train_eps ? Float32[ϵ] : ϵ, aggr, train_eps)
 
 GINConv(nn, ϵ::Real, aggr) = GINConv(nn, ϵ; aggr)
 

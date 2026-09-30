@@ -285,9 +285,9 @@ end
     end
     @test keys(Flux.trainable(l)) == (:nn,)
 
-    l = GINConv(Dense(D_IN, D_OUT); train_eps = true, aggr = mean)
+    l = GINConv(Dense(D_IN, D_OUT); ϵ = 0.5, train_eps = true, aggr = mean)
     @test keys(Flux.trainable(l)) == (:nn, :ϵ)
-    @test l.ϵ == [0.0f0]
+    @test l.ϵ == Float32[0.5]
     for g in TEST_GRAPHS
         @test size(l(g, g.x)) == (D_OUT, g.num_nodes)
     end

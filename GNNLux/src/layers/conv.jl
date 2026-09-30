@@ -1341,7 +1341,7 @@ y, st = l(g, x, ps, st)       # size:  out_channel × num_nodes
 end
 
 GINConv(nn, ϵ::Real; aggr = +, train_eps::Bool = false) =
-    GINConv(nn, train_eps ? [ϵ] : ϵ, aggr, train_eps)
+    GINConv(nn, train_eps ? Float32[ϵ] : ϵ, aggr, train_eps)
 
 GINConv(nn, ϵ::Real, aggr) = GINConv(nn, ϵ; aggr)
 

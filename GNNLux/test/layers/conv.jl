@@ -97,10 +97,10 @@
         ps = LuxCore.initialparameters(rng, l)
         @test !hasproperty(ps, :ϵ)
 
-        l = GINConv(nn; train_eps = true)
+        l = GINConv(nn; ϵ = 0.5, train_eps = true)
         test_lux_layer(rng, l, g, x, sizey=(out_dims,g.num_nodes), container=true)
         ps = LuxCore.initialparameters(rng, l)
-        @test ps.ϵ == [0.0f0]
+        @test ps.ϵ == Float32[0.5]
 
         @test GINConv(nn, 0.5).ϵ == 0.5
     end
