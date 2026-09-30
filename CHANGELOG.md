@@ -10,11 +10,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the packages adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Entries link to the pull request that introduced them.
 
-## GNNLux.jl — Unreleased (towards 0.3.0)
-
-**Added**
-- `GINConv` now supports a trainable `ϵ` parameter through the `train_eps` keyword ([#697]).
-
 ## GNNGraphs.jl — Unreleased (towards 1.6.0)
 
 **Added**
@@ -24,7 +19,7 @@ Entries link to the pull request that introduced them.
 - Added an `EnzymeCore` package extension marking `scaled_laplacian` inactive for Enzyme, matching its existing `@non_differentiable` ChainRules declaration. Enzyme previously differentiated the Krylov eigensolve inside it and failed; this unblocks `ChebConv`, `GConvGRUCell` and `GConvLSTMCell` ([#706]).
 - Enzyme can now differentiate through the adjacency-matrix → COO graph conversion: a new internal keyword-free helper `_to_coo_graph` avoids the union-typed keyword handling of the `GNNGraph(g; graph_type)` constructor and of `to_coo`, which Enzyme's type analysis cannot compile. Together with upstream fixes in Enzyme ≥ 0.13.197 this removes the `EnzymeInternalError` crash on `:dense`/`:sparse` graphs ([#703]).
 
-## GNNLux.jl 0.2.0 — 2026-07-22
+## GNNLux.jl — Unreleased (towards 0.2.0)
 
 **Added**
 - Added pooling layers (`GlobalPool`, `GlobalAttentionPool`, `TopKPool`) ([#576]).
@@ -38,18 +33,12 @@ Entries link to the pull request that introduced them.
 **Removed**
 - Removed the `A3TGCN` layer, mirroring its removal from the Flux frontend ([#696]).
 
-## GNNlib.jl — Unreleased (towards 1.5.0)
-
-**Added**
-- Extended `gin_conv` to accept a scalar-shaped array for `ϵ`, enabling frontends to expose it as a trainable parameter ([#697]).
+## GNNlib.jl — Unreleased (towards 1.4.1)
 
 **Fixed**
 - Fixed `Enzyme.gradient` failing when differentiating `GCNConv`, `SGConv` and `TAGConv` on `:dense`/`:sparse` adjacency graphs: their adjacency-matrix fallbacks now convert via the Enzyme-differentiable `GNNGraphs._to_coo_graph` instead of the keyword `GNNGraph` constructor. Requires GNNGraphs ≥ 1.5.2 and, for Enzyme, Enzyme ≥ 0.13.197 ([#703]).
 
-## GraphNeuralNetworks.jl — Unreleased (towards 1.2.0)
-
-**Added**
-- `GINConv` now supports a trainable `ϵ` parameter through the `train_eps` keyword ([#697]).
+## GraphNeuralNetworks.jl — Unreleased (towards 1.1.1)
 
 **Changed**
 - `GNNRecurrence` now hands each cell an indexed time slice instead of an `eachslice` view, matching the Lux frontend. Enzyme's type analysis fails on `SubArray` cell inputs, so this unblocks `DCGRU`, `EvolveGCNO`, `GConvGRU` and `GConvLSTM` under Enzyme ([#707]).
@@ -245,7 +234,6 @@ Lux implementations of the graph convolutional, pooling, and temporal layers
 [#623]: https://github.com/JuliaGraphs/GraphNeuralNetworks.jl/issues/623
 [#695]: https://github.com/JuliaGraphs/GraphNeuralNetworks.jl/pull/695
 [#696]: https://github.com/JuliaGraphs/GraphNeuralNetworks.jl/pull/696
-[#697]: https://github.com/JuliaGraphs/GraphNeuralNetworks.jl/pull/697
 [#703]: https://github.com/JuliaGraphs/GraphNeuralNetworks.jl/pull/703
 [#704]: https://github.com/JuliaGraphs/GraphNeuralNetworks.jl/pull/704
 [#707]: https://github.com/JuliaGraphs/GraphNeuralNetworks.jl/pull/707
